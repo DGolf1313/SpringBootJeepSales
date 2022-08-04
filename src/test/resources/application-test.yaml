@@ -1,8 +1,7 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:jeep
-
+ datasource:
+   url: jdbc:h2:mem:jeep;MODE=MYSQL
 logging:
  level:
-    root: warn
-    '[com.promineotech]' : debug
+   root: warn
+   '[com.promineotech]': debug

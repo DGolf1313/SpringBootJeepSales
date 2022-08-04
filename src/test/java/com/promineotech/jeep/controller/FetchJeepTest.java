@@ -38,7 +38,6 @@ class FetchJeepTest extends FetchJeepTestSupport{
     System.out.println("num=" + numrows);
   }
   
-  
   @Disabled
   @Test
   void testThatJeepsAreReturnedWhenAValidModelAndTrimAreSupplied() {
@@ -61,9 +60,5 @@ class FetchJeepTest extends FetchJeepTestSupport{
       List<Jeep> expected = buildExpected();
       System.out.println(expected);
       assertThat(response.getBody()).isEqualTo(expected);
-      
     }
-
-  
-  
 }
