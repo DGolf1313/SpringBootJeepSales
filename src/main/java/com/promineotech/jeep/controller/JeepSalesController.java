@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.servers.Server;
 
-@Validated 
+@Validated
 @RequestMapping("/jeeps")
 @OpenAPIDefinition(info = @Info(
     title = "Jeep Sales Service"), 

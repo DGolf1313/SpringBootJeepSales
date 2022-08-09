@@ -25,7 +25,6 @@ import org.springframework.test.jdbc.JdbcTestUtils;
 import com.promineotech.jeep.controller.support.FetchJeepTestSupport;
 import com.promineotech.jeep.entity.Jeep;
 import com.promineotech.jeep.entity.JeepModel;
-import io.swagger.v3.oas.annotations.Parameter;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
