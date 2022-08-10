@@ -120,8 +120,7 @@ class FetchJeepTest extends FetchJeepTestSupport{
   
   static Stream<Arguments> parametersForInvalidInput(){
     return Stream.of(
-        arguments("WRANGLER", "#%$(%#*", "Trim contains non alph-numeric characters")
+        arguments("WRANGLER", "#%$%^%*", "Trim contains non alph-numeric characters")
         );
-        
   }
 }

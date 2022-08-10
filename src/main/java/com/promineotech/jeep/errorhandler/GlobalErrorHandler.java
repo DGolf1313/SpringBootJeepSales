@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -14,19 +15,55 @@ import org.springframework.web.context.request.WebRequest;
 
 @RestControllerAdvice
 public class GlobalErrorHandler {
+  
+  /**
+   * 
+   * @param e
+   * @param webRequest
+   * @return
+   */
+  @ExceptionHandler(ConstraintViolationException.class)
+  @ResponseStatus(code = HttpStatus.BAD_REQUEST)  
+  public Map<String, Object> handleConstraintViolationException(
+      ConstraintViolationException e, WebRequest webRequest){
+    return createExceptionMessage(e, HttpStatus.BAD_REQUEST, webRequest);
+  }
+  
+  /**
+   * 
+   * @param e
+   * @param webRequest
+   * @return
+   */
   @ExceptionHandler(NoSuchElementException.class)
   @ResponseStatus(code = HttpStatus.NOT_FOUND)
-  public Map<String, Object> handleNoSuchElementException(NoSuchElementException e, WebRequest webRequest){
+  public Map<String, Object> handleNoSuchElementException(NoSuchElementException e, 
+      WebRequest webRequest){
     return createExceptionMessage(e, HttpStatus.NOT_FOUND, webRequest);
   }
 
-  private Map<String, Object> createExceptionMessage(NoSuchElementException e, 
+  /**
+   * 
+   * @param e
+   * @param webRequest
+   * @return
+   */
+  @ExceptionHandler(Exception.class)
+  @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+  public Map<String, Object> handleException(Exception e, WebRequest webRequest){
+    return createExceptionMessage(e, HttpStatus.INTERNAL_SERVER_ERROR, webRequest);
+  }
+  
+  
+  private Map<String, Object> createExceptionMessage(Exception e, 
       HttpStatus status, WebRequest webReauest) {
     Map<String, Object> error = new HashMap<>();
-    String timestamp = ZonedDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME);
+    String timestamp = 
+        ZonedDateTime.now().format(DateTimeFormatter.RFC_1123_DATE_TIME);
     
     if(webReauest instanceof ServletWebRequest) {
-      error.put("uri", ((ServletWebRequest)webReauest).getRequest().getRequestURI());
+      error.put("uri", 
+          ((ServletWebRequest)webReauest).getRequest().getRequestURI());
     }
     
     error.put("message", e.toString());

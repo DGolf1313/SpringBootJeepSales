@@ -1,6 +1,7 @@
 package com.promineotech.jeep.controller;
 
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
@@ -69,7 +70,7 @@ public interface JeepSalesController {
               required = false, 
               description = "The trim level (i.e. 'Sport')")
       }
-      )
+    )
   
   
   @GetMapping
