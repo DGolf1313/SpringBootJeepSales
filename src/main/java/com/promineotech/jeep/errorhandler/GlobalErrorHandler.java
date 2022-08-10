@@ -55,10 +55,10 @@ public class GlobalErrorHandler {
    * @return
    */
   @ExceptionHandler(NoSuchElementException.class)
-  @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+  @ResponseStatus(code = HttpStatus.NOT_FOUND)
   public Map<String, Object> handleNoSuchElementException(NoSuchElementException e, 
       WebRequest webRequest){
-    return createExceptionMessage(e, HttpStatus.BAD_REQUEST, webRequest, LogStatus.MESSAGE_ONLY);
+    return createExceptionMessage(e, HttpStatus.NOT_FOUND, webRequest, LogStatus.MESSAGE_ONLY);
   }
 
   /**
