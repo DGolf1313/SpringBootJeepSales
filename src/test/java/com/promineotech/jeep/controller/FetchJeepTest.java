@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.Mockito.doThrow;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,7 +145,8 @@ class FetchJeepTest {
       String uri = 
           String.format("%s?model=%s&trim=%s", getBaseUri(), model, trim );
       
-      System.out.println(uri);
+      doThrow(new RuntimeException("Ouch!")).when(jeepSalesService).fetchJeeps(model, trim);
+      
       //When: a connection is made to the URI
       ResponseEntity<Map<String, Object>> response = 
           getRestTemplate().exchange(uri, HttpMethod.GET, null, 
