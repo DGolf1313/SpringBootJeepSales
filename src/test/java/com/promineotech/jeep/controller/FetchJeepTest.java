@@ -121,7 +121,7 @@ class FetchJeepTest extends FetchJeepTestSupport{
   
   static Stream<Arguments> parametersForInvalidInput(){
     return Stream.of(
-        arguments("WRANGLER", "#%$%^%#$#$$*", "Trim contains non alpha-numeric characters"),
+        arguments("WRANGLER", "%$%^%$$$*", "Trim contains non alpha-numeric characters"),
         arguments("WRANGLER", "C".repeat(Constants.TRIM_MAX_LENGTH + 1), "Trim value too long"),
         arguments("INVALID", "Sport", "Model is not an Enum value")
         );
