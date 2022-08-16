@@ -1,8 +1,10 @@
 package com.promineotech.jeep.entity;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class Customer {
   private long customerPK;
   private String customerId;
