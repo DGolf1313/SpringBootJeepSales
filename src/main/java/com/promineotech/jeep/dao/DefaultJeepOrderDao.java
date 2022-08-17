@@ -14,6 +14,8 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import com.promineotech.jeep.entity.Color;
 import com.promineotech.jeep.entity.Customer;
@@ -30,9 +32,47 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 public class DefaultJeepOrderDao implements JeepOrderDao {
-   
+
   @Autowired
   private NamedParameterJdbcTemplate jdbcTemplate;
+
+  @Override
+  public Order saveOrder(Customer customer, Jeep jeep, Color color, 
+      Engine engine, Tire tire, BigDecimal price, List<Option> options) {
+    SqlParams params = generateInsertSql(customer, jeep, color, engine, tire, price);
+    
+    KeyHolder keyHolder = new GeneratedKeyHolder();
+    jdbcTemplate.update(params.sql, params.source, keyHolder);
+    
+    Long orderPK = keyHolder.getKey().longValue();
+    saveOptions(options, orderPK);
+    
+    //@formatter:off
+    return Order.builder()
+        .orderPK(orderPK)
+        .customer(customer)
+        .model(jeep)
+        .color(color)
+        .engine(engine)
+        .tire(tire)
+        .options(options)
+        .price(price)
+        .build();
+    //@formatter:on
+  }
+
+  
+
+  private void saveOptions(List<Option> options, Long orderPK) {
+    for(Option option : options) {
+      SqlParams params = generateInsertSql(option, orderPK);
+      
+      jdbcTemplate.update(params.sql, params.source);
+      
+    }
+  }
+
+
 
   /**
    * 
@@ -356,4 +396,6 @@ public class DefaultJeepOrderDao implements JeepOrderDao {
   class SqlParams {
     String sql;
     MapSqlParameterSource source = new MapSqlParameterSource();
+  
   }
+}

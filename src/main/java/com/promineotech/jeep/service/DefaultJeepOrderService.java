@@ -1,5 +1,6 @@
 package com.promineotech.jeep.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,22 @@ public class DefaultJeepOrderService implements JeepOrderService {
   
   @Transactional
   @Override
-  public Order createOrder(OrderRequest orderRequest) {
+  public Order createOrder(OrderRequest orderRequest) { 
+    Customer customer = getCustomer(orderRequest);
+    Jeep jeep = getModel(orderRequest);
+    Color color = getColor(orderRequest);
+    Engine engine = getEngine(orderRequest);
+    Tire tire = getTire(orderRequest);
+    List<Option> options = getOption(orderRequest);
+    BigDecimal price = jeep.getBasePrice().add(color.getPrice()).add(engine.getPrice()).add(tire.getPrice());
+    
+    for(Option option : options) {
+      price = price.add(option.getPrice());
+    }
+    
+    return jeepOrderDao.saveOrder(customer, jeep, color, engine, tire, price, options);
+  }
+
     /**
      * 
      * @param orderRequest
@@ -90,7 +106,6 @@ public class DefaultJeepOrderService implements JeepOrderService {
           .orElseThrow(() -> new NoSuchElementException("Customer with ID="
               + orderRequest.getCustomer() + " was not found"));
     
-    return null;
-  }
 
+   }
 }
