@@ -3,6 +3,7 @@ package com.promineotech.jeep.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import com.promineotech.jeep.entity.Jeep;
 import com.promineotech.jeep.entity.JeepModel;
 import com.promineotech.jeep.service.JeepSalesService;
@@ -21,6 +22,12 @@ public class BasicJeepSalesController implements JeepSalesController {
     log.debug("model={}, trim={}", model, trim);
     List<Jeep> jeeps = jeepSalesService.fetchJeeps(model, trim);
     return jeeps;
+  }
+
+  @Override
+  public String uploadImage(MultipartFile image, Long jeepPK) {
+    log.debug("image={}, jeepPK={}", image, jeepPK);
+    return "Success!";
   }
 
 }

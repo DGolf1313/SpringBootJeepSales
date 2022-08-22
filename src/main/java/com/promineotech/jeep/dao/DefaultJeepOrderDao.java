@@ -61,8 +61,6 @@ public class DefaultJeepOrderDao implements JeepOrderDao {
     //@formatter:on
   }
 
-  
-
   private void saveOptions(List<Option> options, Long orderPK) {
     for(Option option : options) {
       SqlParams params = generateInsertSql(option, orderPK);
