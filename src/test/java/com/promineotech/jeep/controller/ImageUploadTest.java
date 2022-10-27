@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @AutoConfigureMockMvc
 class ImageUploadTest {
   
-  private static final String JEEP_IMAGE = "JeepWrangler.jpg";
+  private static final String JEEP_IMAGE = "JeepWrangler.jpeg";
   @Autowired
   private MockMvc mockMvc;
 
@@ -46,7 +46,7 @@ class ImageUploadTest {
               .multipart("/jeeps/1/image")
               .file(file))
           .andDo(print())
-          .andExpect(status().isOk())
+          .andExpect(status().is(201))
           .andReturn();
           //@formatter:on
       

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
+import com.promineotech.jeep.entity.Image;
 import com.promineotech.jeep.entity.Jeep;
 import com.promineotech.jeep.entity.JeepModel;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,28 @@ public class DefaultJeepSalesDao implements JeepSalesDao {
             .build();
         //@formatter:on
       }});
+  }
+
+  @Override
+  public void saveImage(Image image) {
+    String sql = ""
+        + "INSERT INTO images ("
+        + "model_fk, image_id, width, height, mime_type, name, data"
+        + ") VALUES ("
+        + ":model_fk, :image_id, :width, :height, :mime_type, :name, :data"
+        + ")";
+    
+    Map<String, Object> params = new HashMap<>();
+    
+    params.put("model_fk", image.getModelFK());
+    params.put("image_id", image.getImageId());
+    params.put("width", image.getWidth());
+    params.put("height", image.getHeight());
+    params.put("mime_type", image.getMimeType().getMimeType());
+    params.put("name", image.getName());
+    params.put("data", image.getData());
+    
+    jdbcTemplate.update(sql, params);
   }
 
 }

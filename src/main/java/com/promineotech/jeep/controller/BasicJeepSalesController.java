@@ -27,7 +27,9 @@ public class BasicJeepSalesController implements JeepSalesController {
   @Override
   public String uploadImage(MultipartFile image, Long jeepPK) {
     log.debug("image={}, jeepPK={}", image, jeepPK);
-    return "Success!";
+    String imageId =  jeepSalesService.uploadImage(image, jeepPK);
+    String json = "{\"imageId\":\"" + imageId + "\"}";
+    return json;
   }
 
 }
