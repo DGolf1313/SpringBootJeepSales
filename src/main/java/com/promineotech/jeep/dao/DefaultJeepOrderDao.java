@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -26,9 +25,7 @@ import com.promineotech.jeep.entity.JeepModel;
 import com.promineotech.jeep.entity.Option;
 import com.promineotech.jeep.entity.OptionType;
 import com.promineotech.jeep.entity.Order;
-import com.promineotech.jeep.entity.OrderRequest;
 import com.promineotech.jeep.entity.Tire;
-import lombok.extern.slf4j.Slf4j;
 
 @Component
 public class DefaultJeepOrderDao implements JeepOrderDao {
